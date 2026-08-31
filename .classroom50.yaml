@@ -1,0 +1,13 @@
+schema: "classroom50/repo-config/v1"
+classroom: "compsci-719-programming-with-web-technologies"
+assignment: "assignment-part-b"
+secret: "x3c6i21w"
+owner:
+  username: "ctkeiii"
+  id: 292025120
+  accepted_at: "2026-08-31T03:54:39Z"
+source:
+  owner: "UOA-PGCIT-S2-2026"
+  owner_id: 301549941
+  repo: "cs719-assignment-part-b-2026-s2"
+  branch: "main"
