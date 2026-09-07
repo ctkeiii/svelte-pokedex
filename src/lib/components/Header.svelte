@@ -63,18 +63,19 @@
         margin-bottom: 10px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        padding: 12px 16px;
+        align-items: stretch;
         & h1{
-            margin: 0;
+            margin: 10px;
             color: #FFCB05;
             font-family: pokemon;
             font-size: 50px;
+            padding: 5px 10px;
             text-shadow: #3C5AA6;
             filter: drop-shadow(3px 3px 0 #3C5AA6)
                     drop-shadow(-3px -3px 0 #3C5AA6)
                     drop-shadow(3px 5px 2px rgba(0,0,0,0.3));
             cursor: default;
+
         }
         & #menu {
             display: flex;
@@ -85,10 +86,12 @@
                 padding: 12px 0;
                 font-size: 20px;
                 position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 
                 & .menu-title{
                     display: flex;
-                    justify-content: center;
                     gap: 5px;
                     cursor: pointer;
                 }
