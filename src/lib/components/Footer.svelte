@@ -7,15 +7,14 @@
 </div>
 
 <style>
-    #footer{
-        background-color:#56494C;
-        color: white;
-        text-align: center;
-        padding: 10px 0;
-        & p{
-            margin: 0;
-            padding: 5px 0;
-        }
-    }
+  #footer {
+    background-color: #56494c;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+  }
+  p {
+    margin: 0;
+    padding: 5px 0;
+  }
 </style>
-

@@ -1,134 +1,161 @@
 <script>
-    import { onMount } from 'svelte';
-    import { PUBLIC_SERVER_BASE_URL } from '$env/static/public';
-    let pokemons = $state([]);
-    async function fetchPokemonList() {
-        let response = await fetch(PUBLIC_SERVER_BASE_URL);
-        pokemons = await response.json();
+  import { PUBLIC_SERVER_BASE_URL } from "$env/static/public";
+
+  let pokemons = $state([]);
+  let { selectedPokemon = $bindable() } = $props();
+  let selectedGen = $state("");
+  let typedSearch = $state("");
+  let filteredPokemons = $derived(
+    pokemons.filter(
+      (pokemon) =>
+        pokemon.name.toLowerCase().includes(typedSearch.toLowerCase()) ||
+        pokemon.dexNumber.toString().includes(typedSearch)
+    )
+  );
+
+  $effect(() => fetchPokemonList(selectedGen));
+
+  async function fetchPokemonList(selectedGen) {
+    let param = "";
+    if (selectedGen !== "") {
+      param = "?gen=";
     }
-    
-    onMount(fetchPokemonList);
+    let response = await fetch(`${PUBLIC_SERVER_BASE_URL}${param}${selectedGen}`);
+    pokemons = await response.json();
+  }
 </script>
 
-<div id="container">
-    <div id="list-section">
-        <div id="search-container">
-            <input id="search-bar" type="text" placeholder="Search Pokémon">
-            <button id="search-button"></button>
-        </div>
-        <div id="pokemon-list">
-            {#each pokemons as pokemon}
-                <p><img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.dexNumber}.png`} alt={pokemon.name}>#{pokemon.dexNumber} {pokemon.name}</p>
-            {/each}
-
-        </div>
-    </div>
+<div id="list-section">
+  <div id="search-container">
+    <input id="search-bar" type="text" placeholder="Search Pokémon" bind:value={typedSearch} />
+    <select bind:value={selectedGen}>
+      <option value="">All generations</option>
+      <option value="1">Gen 1</option>
+      <option value="2">Gen 2</option>
+      <option value="3">Gen 3</option>
+      <option value="4">Gen 4</option>
+      <option value="5">Gen 5</option>
+      <option value="6">Gen 6</option>
+      <option value="7">Gen 7</option>
+      <option value="8">Gen 8</option>
+      <option value="9">Gen 9</option>
+    </select>
+  </div>
+  <div id="pokemon-list">
+    {#each filteredPokemons as pokemon}
+      <button
+        onclick={() => (selectedPokemon = pokemon)}
+        class:selected={selectedPokemon === pokemon}
+      >
+        <img
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.dexNumber}.png`}
+          alt={pokemon.name}
+        />
+        #{pokemon.dexNumber.toString().padStart(3, "0")}
+        {pokemon.name}
+      </button>
+    {/each}
+  </div>
 </div>
 
-
 <style>
-    #list-section {
-        display: grid;
-        grid-template-rows: auto 1fr;
-        gap: 10px;
-        padding-left: 10px;
+  #list-section {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 10px;
+    padding-left: 10px;
 
-        & #search-container{
-            position: relative;
-            padding: 0 27px 0 3px;
+    & #search-container {
+      display: flex;
+    }
+  }
 
-            & #search-bar{
-            border: 1px solid transparent;
-            border-radius: 10px;
-            background-color: #847E89;
-            color: white;
-            height: 40px;
-            padding: 0 50px 0 10px;
+  #search-bar {
+    flex: 3;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: #847e89;
+    color: white;
+    height: 40px;
+    padding: 0 10px;
+    width: auto;
+    margin: 0 3px;
+    font: inherit;
+    &::placeholder {
+      color: white;
+    }
+  }
 
-            width: 100%;
-            &::placeholder{
-                color: white;
-                }
-            }
+  #pokemon-list {
+    padding-right: 10px;
+    /* Create the scrollbar */
+    height: 700px;
+    overflow-y: auto; /* add a vertical scrollbar when the content overflows. */
+    overflow-x: hidden;
 
-            & #search-button{
-                z-index: 1;
-                width: 25px;
-                height: 25px;
-                position: absolute;
-                top: 8px;
-                right: 40px;
-                background-image: url("/images/search-button.png");
-                background-size: contain;
-                background-color: transparent;
-                border: none;
-                &:hover{
-                    cursor: pointer;
-                }
-            }
-        }
+    & button {
+      border: 1px solid transparent;
+      border-radius: 10px;
+      padding: 10px 10px;
+      margin: 8px 3px;
+      background-color: rgba(23, 35, 60, 0.06);
+      transition: background-color 0.2s linear;
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      gap: 3px;
+      width: 100%;
+      font-size: 16px;
+      font: inherit;
+      color: inherit;
     }
 
-    #pokemon-list {
-        padding-right: 10px;
-        /* Create the scrollbar */
-        height: 700px;
-        overflow-y: auto; /* add a vertical scrollbar when the content overflows. */
-
-        & p {
-            border: 1px solid transparent;
-            border-radius: 10px;
-            padding: 10px 10px;
-            margin: 8px 3px;
-            background-color: rgba(23, 35, 60, 0.06);
-            transition: background-color 0.2s linear;
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            gap: 3px;
-        }
-
-        & .selected {
-            background-color: #5c4155c3;
-            color: white;
-        }
-
-        & img{
-            height: 40px;
-            width: 40px;
-            transition: transform 0.2s ease;
-        }
-        
-        & .small-img{
-            transform: scale(1.4);
-        }
-
-        & p:hover{
-            background-color:#918992c0;
-            color: white;
-            cursor: pointer;
-            img:not(.small-img){
-                transform: scale(1.15);
-                filter: drop-shadow(0 0 12px grey);
-            }
-            .small-img{
-                transform: scale(1.61);
-                filter: drop-shadow(0 0 12px grey);
-            }
-        }
+    & .selected {
+      background-color: #5c4155c3;
+      color: white;
     }
 
-    #pokemon-list::-webkit-scrollbar {
-        width: 15px;
+    & img {
+      height: 40px;
+      width: 40px;
+      transition: transform 0.2s ease;
     }
 
-    #pokemon-list::-webkit-scrollbar-track {
-        background: #E5E0E1;
-        border-radius: 5px;
+    & button:hover {
+      background-color: #918992c0;
+      color: white;
+      cursor: pointer;
+      img {
+        transform: scale(1.15);
+        filter: drop-shadow(0 0 12px grey);
+      }
     }
+  }
 
-    #pokemon-list::-webkit-scrollbar-thumb {
-        background: rgba(0,0,0, 0.2);
-        border-radius: 5px;
-    }
+  select {
+    background-color: #56494c;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 16px;
+    font: inherit;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    border: none;
+    flex: 1;
+  }
+
+  #pokemon-list::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  #pokemon-list::-webkit-scrollbar-track {
+    background: #e5e0e1;
+    border-radius: 5px;
+  }
+
+  #pokemon-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
 </style>
