@@ -1,5 +1,5 @@
 <div id="header">
-  <h1>POKÉDEX</h1>
+  <button onclick={() => window.location.reload()}> POKÉDEX </button>
   <div id="menu">
     <div class="menu-item">
       <div class="menu-title">
@@ -64,7 +64,7 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
-    & h1 {
+    & button {
       margin: 10px;
       color: #ffcb05;
       font-family: pokemon;
@@ -72,7 +72,9 @@
       padding: 5px 10px;
       filter: drop-shadow(3px 3px 0 #3c5aa6) drop-shadow(-3px -3px 0 #3c5aa6)
         drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.3));
-      cursor: default;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   }
 
