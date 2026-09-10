@@ -42,7 +42,7 @@
       <button
         type="button"
         onclick={() => (selectedPokemon = pokemon)}
-        class:selected={selectedPokemon.name === pokemon.name}
+        class:selected={selectedPokemon?.name === pokemon.name}
       >
         <img
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.dexNumber}.png`}

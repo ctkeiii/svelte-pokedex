@@ -39,60 +39,62 @@
   {:else}
     <div class="type-buttons">
       {#each types as type}
-        <button class="pokemon-type" onmouseenter={() => (hoveredType = type.toLowerCase())}>
-          <img src={`/images/type-icons/type-icon-${type.toLowerCase()}.png`} alt={type} />
-          <span>{type.toUpperCase()}</span>
-        </button>
+        <div class="type-wrapper">
+          <button class="pokemon-type" onmouseenter={() => (hoveredType = type.toLowerCase())}>
+            <img src={`/images/type-icons/type-icon-${type.toLowerCase()}.png`} alt={type} />
+            <span>{type.toUpperCase()}</span>
+          </button>
+          {#each typeDetails as typeDetail}
+            {#if hoveredType === typeDetail.name}
+              <div class="type-detail">
+                <div id="offense">
+                  <div class="type-title">
+                    <p>Offense</p>
+                  </div>
+                  <div class="type-content">
+                    {#each Object.entries(typeDetail.damage_relations) as [relation, types]}
+                      {#if types.length > 0 && relation.includes("_to")}
+                        <div class="type-row">
+                          <span>{damageRelations[relation]}</span>
+                          {#each types as type}
+                            <img
+                              src={`/images/type-icons/type-icon-${type.name}.png`}
+                              title={type.name}
+                              alt={type.name}
+                            />
+                          {/each}
+                        </div>
+                      {/if}
+                    {/each}
+                  </div>
+                </div>
+                <div id="defense">
+                  <div class="type-title">
+                    <p>Defense</p>
+                  </div>
+                  <div class="type-content">
+                    {#each Object.entries(typeDetail.damage_relations) as [relation, types]}
+                      {#if types.length > 0 && relation.includes("_from")}
+                        <div class="type-row">
+                          <span>{damageRelations[relation]}</span>
+                          {#each types as type}
+                            <img
+                              src={`/images/type-icons/type-icon-${type.name}.png`}
+                              title={type.name}
+                              alt={type.name}
+                            />
+                          {/each}
+                        </div>
+                      {/if}
+                    {/each}
+                  </div>
+                </div>
+              </div>
+            {/if}
+          {/each}
+        </div>
       {/each}
     </div>
-    {#each typeDetails as typeDetail}
-      {#if hoveredType === typeDetail.name}
-        <div class="type-detail">
-          <div id="offense">
-            <div class="type-title">
-              <p>Offense</p>
-            </div>
-            <div class="type-content">
-              {#each Object.entries(typeDetail.damage_relations) as [relation, types]}
-                {#if types.length > 0 && relation.includes("_to")}
-                  <div class="type-row">
-                    <span>{damageRelations[relation]}</span>
-                    {#each types as type}
-                      <img
-                        src={`/images/type-icons/type-icon-${type.name}.png`}
-                        title={type.name}
-                        alt={type.name}
-                      />
-                    {/each}
-                  </div>
-                {/if}
-              {/each}
-            </div>
-          </div>
-          <div id="defense">
-            <div class="type-title">
-              <p>Defense</p>
-            </div>
-            <div class="type-content">
-              {#each Object.entries(typeDetail.damage_relations) as [relation, types]}
-                {#if types.length > 0 && relation.includes("_from")}
-                  <div class="type-row">
-                    <span>{damageRelations[relation]}</span>
-                    {#each types as type}
-                      <img
-                        src={`/images/type-icons/type-icon-${type.name}.png`}
-                        title={type.name}
-                        alt={type.name}
-                      />
-                    {/each}
-                  </div>
-                {/if}
-              {/each}
-            </div>
-          </div>
-        </div>
-      {/if}
-    {/each}
   {/if}
 </div>
 
@@ -132,16 +134,19 @@
     gap: 10px;
   }
 
-  .pokemon-type-container:hover .type-detail {
+  .type-wrapper:hover .type-detail {
     opacity: 1;
     visibility: visible;
   }
 
   .pokemon-type-container {
-    position: relative;
     width: fit-content;
     max-width: 100%;
     margin-bottom: 10px;
+  }
+
+  .type-wrapper{
+    position: relative;
   }
 
   .type-detail {
@@ -198,7 +203,7 @@
       flex-direction: column;
       gap: 5px;
       padding: 15px;
-      width: min(60vw, 200px);
+      width: auto;
     }
   }
 </style>
