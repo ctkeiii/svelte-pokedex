@@ -38,7 +38,7 @@
       `${PUBLIC_POKEMON_DETAIL_URL}-species/${selectedPokemon.dexNumber}`
     );
     speciesDetails = await response2.json();
-    fetchEvolutionChain();
+    await fetchEvolutionChain();
   }
 
   async function fetchEvolutionChain() {
@@ -113,7 +113,7 @@
     <div class="pokemon-section">
       <div class="pokemon-image">
         <img
-          src="https://i0.wp.com/www.alphr.com/wp-content/uploads/2016/07/whos_that_pokemon.png?fit=1920%2C1080&ssl=1"
+          src="/images/pokemon-placeholder.png"
           alt="No Pokémon selected"
           class="placeholder"
         />
@@ -446,7 +446,7 @@
   }
 
   .placeholder {
-    opacity: 0.3;
+    opacity: 0.5;
   }
 
   .pokemon-image {

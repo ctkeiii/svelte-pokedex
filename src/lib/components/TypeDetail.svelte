@@ -12,7 +12,11 @@
     }
   }
 
-  $effect(() => fetchTypeDetail(types));
+  $effect(() => {
+    if (types) {
+      fetchTypeDetail(types);
+    }
+  });
 
   let damageRelations = {
     no_damage_to: "No effect on",
@@ -28,7 +32,7 @@
   {#if !types}
     <div class="placeholder-type-buttons">
       <button class="pokemon-type placeholder" disabled>
-        <img src="/images/type-icons/type-icon-fire.png" alt="placeholder">
+        <img src="/images/type-icons/type-icon-unknown.png" alt="placeholder" />
         <span>????????</span>
       </button>
     </div>
@@ -129,7 +133,6 @@
   }
 
   .pokemon-type-container:hover .type-detail {
-    /*If the pokemon-type is hovered, the next sibling type-detail will appear*/
     opacity: 1;
     visibility: visible;
   }
@@ -186,7 +189,16 @@
       }
     }
   }
-  .placeholder{
+  .placeholder {
     opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    .type-detail {
+      flex-direction: column;
+      gap: 5px;
+      padding: 15px;
+      width: min(60vw, 200px);
+    }
   }
 </style>

@@ -2,7 +2,7 @@
   import PokemonDetail from "$lib/components/PokemonDetail.svelte";
   import PokemonList from "$lib/components/PokemonList.svelte";
 
-  let selectedPokemon = $state(null)
+  let selectedPokemon = $state(null);
 </script>
 
 <div id="container">

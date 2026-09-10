@@ -40,8 +40,9 @@
   <div id="pokemon-list">
     {#each filteredPokemons as pokemon}
       <button
+        type="button"
         onclick={() => (selectedPokemon = pokemon)}
-        class:selected={selectedPokemon === pokemon}
+        class:selected={selectedPokemon.name === pokemon.name}
       >
         <img
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon.dexNumber}.png`}
@@ -153,5 +154,12 @@
   #pokemon-list::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 5px;
+  }
+
+  @media (max-width: 768px) {
+    #pokemon-list {
+      height: 350px;
+      width: 100%;
+    }
   }
 </style>

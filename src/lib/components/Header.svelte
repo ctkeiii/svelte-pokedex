@@ -1,6 +1,3 @@
-<script>
-</script>
-
 <div id="header">
   <h1>POKÉDEX</h1>
   <div id="menu">
@@ -17,7 +14,7 @@
     </div>
     <div class="menu-item">
       <div class="menu-title">
-        <img src="/images/menu-icons/palette.png" alt="lalette-icon" />
+        <img src="/images/menu-icons/palette.png" alt="palette-icon" />
         <span>THEME</span>
       </div>
       <div class="drop-down">
@@ -73,7 +70,6 @@
       font-family: pokemon;
       font-size: 50px;
       padding: 5px 10px;
-      text-shadow: #3c5aa6;
       filter: drop-shadow(3px 3px 0 #3c5aa6) drop-shadow(-3px -3px 0 #3c5aa6)
         drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.3));
       cursor: default;
