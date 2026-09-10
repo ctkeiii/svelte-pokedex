@@ -1,17 +1,15 @@
 <script>
-  let { types, typeLoaded = $bindable(false) } = $props();
+  let { types } = $props();
   let typeDetails = $state([]);
   let hoveredType = $state(null);
 
   async function fetchTypeDetail(types) {
-    typeLoaded = false;
     typeDetails = [];
     for (let type of types) {
       let response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
       let data = await response.json();
       typeDetails.push(data);
     }
-    typeLoaded = true;
   }
 
   $effect(() => fetchTypeDetail(types));

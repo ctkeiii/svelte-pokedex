@@ -98,7 +98,7 @@ body:has(#fire:checked) {
 
   }
 
-  .loading {
+  #loading {
     color: #9a421d;
     ;
   }
@@ -188,7 +188,7 @@ body:has(#water:checked) {
     background-color: #6cb2b8;
   }
 
-  .loading {
+  #loading {
     color: #2e666b;
   }
 
@@ -270,7 +270,7 @@ body:has(#grass:checked) {
     background-color: #2F967C;
   }
 
-  .loading {
+  #loading {
     color: #3e6f52;
   }
 
@@ -295,6 +295,23 @@ body:has(.menu-item:nth-child(3) .drop-down p:nth-child(4):hover) .pokemon-type 
   outline: 4px dashed goldenrod;
 }
 
+body:has(.menu-item:nth-child(3) .drop-down p:nth-child(5):hover) .pokemon-image {
+  outline: 4px dashed goldenrod;
+}
+
+body:has(.menu-item:nth-child(3) .drop-down p:nth-child(6):hover) #card-section{
+  outline: 4px dashed goldenrod;
+}
+
+body:has(.menu-item:nth-child(3) .drop-down p:nth-child(7):hover) #search-bar {
+  outline: 4px dashed goldenrod;
+}
+
+body:has(.menu-item:nth-child(3) .drop-down p:nth-child(8):hover) select {
+  outline: 4px dashed goldenrod;
+}
+
+
 @media (max-width: 768px) {
   #header {
     flex-direction: column;
@@ -311,9 +328,6 @@ body:has(.menu-item:nth-child(3) .drop-down p:nth-child(4):hover) .pokemon-type 
     width: 100%;
   }
 
-  #pokemon-section {
-    flex-wrap: wrap;
-  }
 
   .type-detail {
     flex-direction: column;

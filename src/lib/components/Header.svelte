@@ -51,6 +51,10 @@
         <p>✎ Choose a theme from the Theme menu</p>
         <p>★ Click the star to view Shiny Pokémon</p>
         <p>⇪ Hover over the type to view strengths & weaknesses</p>
+        <p>♪ Click the Pokémon to hear its cry</p>
+        <p>▣ View Pokémon details and evolution on the Pokémon card</p>
+        <p>⌕ Search for Pokémon by name or Pokédex number</p>
+        <p>☷ Filter Pokémon by generation</p>
       </div>
     </div>
   </div>

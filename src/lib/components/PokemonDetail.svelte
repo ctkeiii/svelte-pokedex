@@ -11,7 +11,6 @@
   let speciesDetails = $state(null);
   let evolutionChain = $state(null);
   let imageLoaded = $state(false);
-  let typeLoaded = $state(false);
   let isShake = $state(false);
 
   $effect(() => {
@@ -19,10 +18,11 @@
       cardDetails = null; // for loading...
       speciesDetails = null;
       evolutionChain = null;
-      fetchPokemonDetails();
-      fetchCardDetails();
       imageLoaded = false;
       pokemonDetails = null;
+
+      fetchPokemonDetails();
+      fetchCardDetails();
     }
   });
 
@@ -90,7 +90,6 @@
   }
 
   function playCry(pokemon) {
-    console.log(pokemon.crySound);
     let cry = new Audio(pokemon.crySound);
     isShake = true;
     cry.play();
@@ -147,12 +146,20 @@
         </div>
       </div>
     </div>
-    <TypeDetail types={null} bind:typeLoaded />
+    <TypeDetail types={null} />
     <PokemonEntry pokemonDetails={null} />
 
     <!-- selected but fetching -->
   {:else if !pokemonDetails || !cardDetails || !speciesDetails || !evolutionChain}
-    <p class="loading">LOADING...</p>
+    <div id="loading-placeholder">
+      <img src="/images/pokeball-placeholder.svg" alt="pokeball-placeholder" />
+      <p id="loading">
+        LOADING
+        <span>.</span>
+        <span>..</span>
+        <span>...</span>
+      </p>
+    </div>
 
     <!-- everything fetched -->
   {:else}
@@ -234,7 +241,7 @@
         <input type="checkbox" id="evolution-check" />
       </div>
     </div>
-    <TypeDetail types={pokemonDetails.types} bind:typeLoaded />
+    <TypeDetail types={pokemonDetails.types}/>
     <PokemonEntry {pokemonDetails} />
   {/if}
 </div>
@@ -344,14 +351,74 @@
     }
   }
 
-  .loading {
+  #loading {
     font-family: pokemon;
     text-align: center;
     font-size: 50px;
+    position: relative;
+  }
+
+  #loading span {
+    opacity: 0;
+    position: absolute;
+    left: 105%;
+  }
+
+  #loading span:nth-child(1) {
+    animation: dot1 0.9s infinite;
+  }
+
+  #loading span:nth-child(2) {
+    animation: dot2 0.9s infinite;
+  }
+
+  #loading span:nth-child(3) {
+    animation: dot3 0.9s infinite;
+  }
+
+  @keyframes dot1 {
+    0%,
+    25% {
+      opacity: 1;
+    }
+    26%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes dot2 {
+    0%,
+    25% {
+      opacity: 0;
+    }
+    26%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes dot3 {
+    0%,
+    50% {
+      opacity: 0;
+    }
+    51%,
+    75% {
+      opacity: 1;
+    }
+    76%,
+    100% {
+      opacity: 0;
+    }
   }
 
   #evolution-check {
-    visibility: hidden;
+    display: none;
   }
 
   #card-section {
@@ -391,12 +458,14 @@
 
     & img {
       position: relative;
-      top: -10px;
       grid-area: 1 / 1;
       /* put both images in the first row and column. */
       justify-self: center;
       width: 350px;
       object-fit: contain;
+      &:not(.placeholder){
+        top: -10px;
+      }
     }
 
     & #normal {
@@ -443,6 +512,15 @@
       & #shiny {
         opacity: 1;
       }
+    }
+  }
+
+  #loading-placeholder {
+    display: flex;
+    gap: 10px;
+    & img {
+      width: 30px;
+      opacity: 0.4;
     }
   }
 

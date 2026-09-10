@@ -3,7 +3,7 @@
 
   let pokemons = $state([]);
   let { selectedPokemon = $bindable() } = $props();
-  let selectedGen = $state("");
+  let selectedGen = $state("all");
   let typedSearch = $state("");
   let filteredPokemons = $derived(
     pokemons.filter(
@@ -16,11 +16,7 @@
   $effect(() => fetchPokemonList(selectedGen));
 
   async function fetchPokemonList(selectedGen) {
-    let param = "";
-    if (selectedGen !== "") {
-      param = "?gen=";
-    }
-    let response = await fetch(`${PUBLIC_SERVER_BASE_URL}${param}${selectedGen}`);
+    let response = await fetch(`${PUBLIC_SERVER_BASE_URL}?gen=${selectedGen}`);
     pokemons = await response.json();
   }
 </script>
@@ -29,7 +25,7 @@
   <div id="search-container">
     <input id="search-bar" type="text" placeholder="Search Pokémon" bind:value={typedSearch} />
     <select bind:value={selectedGen}>
-      <option value="">All generations</option>
+      <option value="all">All generations</option>
       <option value="1">Gen 1</option>
       <option value="2">Gen 2</option>
       <option value="3">Gen 3</option>
